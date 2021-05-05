@@ -24,12 +24,14 @@ parser.add_argument('--num_classes', type=int, default=10, help='the # of classe
 parser.add_argument('--net_type', required=True, help='resnet | densenet')
 parser.add_argument('--gpu', type=int, default=0, help='gpu index')
 parser.add_argument('--adv_type', required=True, help='FGSM | BIM | DeepFool | CWL2')
+parser.add_argument('--pre_trained', default='./pre_trained/', help='path to dataset')
+
 args = parser.parse_args()
 print(args)
 
 def main():
     # set the path to pre-trained model and output
-    pre_trained_net = './pre_trained/' + args.net_type + '_' + args.dataset + '.pth'
+    pre_trained_net = args.pre_trained + args.net_type + '_' + args.dataset + '.pth'
     args.outf = args.outf + args.net_type + '_' + args.dataset + '/'
     if os.path.isdir(args.outf) == False:
         os.mkdir(args.outf)
@@ -142,4 +144,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
