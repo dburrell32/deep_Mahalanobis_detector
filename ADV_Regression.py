@@ -12,20 +12,22 @@ from sklearn.linear_model import LogisticRegressionCV
 
 parser = argparse.ArgumentParser(description='PyTorch code: Mahalanobis detector')
 parser.add_argument('--net_type', required=True, help='resnet | densenet')
+parser.add_argument('--outf', default='./output/', help='folder to output results')
+
 args = parser.parse_args()
 print(args)
 
 def main():
     # initial setup
-    dataset_list = ['cifar10', 'cifar100', 'svhn']
-    adv_test_list = ['FGSM', 'BIM', 'DeepFool', 'CWL2']
+    dataset_list = ['cifar10']#', 'cifar100', 'svhn']
+    adv_test_list = ['FGSM']#, 'BIM', 'DeepFool', 'CWL2']
 
     print('evaluate the LID estimator')
     score_list = ['LID_10', 'LID_20', 'LID_30', 'LID_40', 'LID_50', 'LID_60', 'LID_70', 'LID_80', 'LID_90']
     list_best_results, list_best_results_index = [], []
     for dataset in dataset_list:
         print('load train data: ', dataset)
-        outf = './adv_output/' + args.net_type + '_' + dataset + '/'
+        outf = args.outf + args.net_type + '_' + dataset + '/'
 
         list_best_results_out, list_best_results_index_out = [], []
         for out in adv_test_list:
@@ -60,7 +62,7 @@ def main():
     list_best_results_ours, list_best_results_index_ours = [], []
     for dataset in dataset_list:
         print('load train data: ', dataset)
-        outf = './adv_output/' + args.net_type + '_' + dataset + '/'
+        outf = args.outf + args.net_type + '_' + dataset + '/'
         list_best_results_out, list_best_results_index_out = [], []
         for out in adv_test_list:
             best_auroc, best_result, best_index = 0, 0, 0
